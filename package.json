@@ -1,6 +1,6 @@
 {
   "name": "lightningchess-fe",
-  "homepage": "https://timoney.github.io/lightningchess",
+  "homepage": "https://timoney.github.io/lightningchess-fe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
