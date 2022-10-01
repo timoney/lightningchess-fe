@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/lightningchess-fe/static/css/main.073c9b0a.css",
+    "main.js": "/lightningchess-fe/static/js/main.52427f9e.js",
+    "static/js/787.22e78689.chunk.js": "/lightningchess-fe/static/js/787.22e78689.chunk.js",
+    "static/media/logo.svg": "/lightningchess-fe/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/lightningchess-fe/index.html",
+    "main.073c9b0a.css.map": "/lightningchess-fe/static/css/main.073c9b0a.css.map",
+    "main.52427f9e.js.map": "/lightningchess-fe/static/js/main.52427f9e.js.map",
+    "787.22e78689.chunk.js.map": "/lightningchess-fe/static/js/787.22e78689.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.52427f9e.js"
+  ]
+}
