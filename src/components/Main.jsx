@@ -5,7 +5,7 @@ const login = () => {
 }
 
 const fetchData = async () => {
-  const response = await fetch('https://lightningchess-uq3lf7yjga-uc.a.run.app/login')
+  const response = await fetch('https://lightningchess-uq3lf7yjga-uc.a.run.app/login', { mode: 'no-cors'})
   const data = await response.json
   console.log(data);
 }
