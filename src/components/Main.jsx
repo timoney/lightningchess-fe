@@ -4,19 +4,13 @@ const login = () => {
   alert('hi');
 }
 
-const fetchData = async () => {
-  const response = await fetch('https://lightningchess-uq3lf7yjga-uc.a.run.app/login', { mode: 'no-cors'})
-  const data = await response.json
-  console.log(data);
-}
-
 const Main = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div>
       Welcome!
-      <button onClick={fetchData}>Login</button>
+      <a href="https://lightningchess-uq3lf7yjga-uc.a.run.app/login">Login</amain.c4aeb492.jsmain.c4aeb492.jsmain.c4aeb492.js>
     </div>
   )
 }
