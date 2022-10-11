@@ -1,12 +1,25 @@
 import React from 'react'
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 const Header = () => {
   return (
-    <header className="App-header">
-      <p>
-        Lightning Chess
-      </p>
-    </header>
+    <AppBar
+      position="absolute"
+      color="default"
+      elevation={0}
+      sx={{
+        position: 'relative',
+        borderBottom: (t) => `1px solid ${t.palette.divider}`,
+      }}
+    >
+      <Toolbar>
+        <Typography variant="h6" color="inherit" noWrap>
+          Lightning Chess
+        </Typography>
+      </Toolbar>
+    </AppBar>
   )
 }
 
