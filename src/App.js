@@ -4,6 +4,7 @@ import Main from './components/Main'
 import { AuthProvider } from './contexts/Auth'
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const theme = createTheme({
@@ -28,10 +29,12 @@ function App() {
     <div className="App">
       <AuthProvider>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Header/>
-          <Main/>
-         </ThemeProvider>
+          <BrowserRouter>
+            <CssBaseline />
+            <Header/>
+            <Main/>
+            </BrowserRouter>
+        </ThemeProvider>
       </AuthProvider>
     </div>
   );

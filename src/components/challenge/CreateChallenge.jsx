@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik';
-import Waiting from './Waiting';
+import CreateChallengeWaiting from './CreateChallengeWaiting';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
@@ -12,7 +12,7 @@ import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-const Challenge = () => {
+const CreateChallenge = ({setOpen}) => {
   const [gameInfo, setGameInfo] = useState(null);
   const [timeLimit, setTimeLimit] = useState(5)
   const [increment, setIncrement] = useState(0)
@@ -91,10 +91,9 @@ const Challenge = () => {
       </Paper>
     </Container>)
   } else {
-    console.log(`gameInfo: ${JSON.stringify(gameInfo, null, ' ')}`)
-    return <Waiting/>
+    return <CreateChallengeWaiting gameInfo={gameInfo} setOpen={setOpen}/>
   } 
 
 }
 
-export default Challenge
+export default CreateChallenge

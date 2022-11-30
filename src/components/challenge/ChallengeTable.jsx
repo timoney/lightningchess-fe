@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import ChallengeAcceptForm from './challenge/ChallengeAcceptForm'
+import ChallengeDetails from './ChallengeDetails'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
 
-const WaitingTable = ({rows}) => {
+const ChallengeTable = ({rows}) => {
   const [open, setOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState({});
   const handleClose = () => {
@@ -60,10 +60,10 @@ const WaitingTable = ({rows}) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <ChallengeAcceptForm challenge={selectedRow}/>
+        <ChallengeDetails challenge={selectedRow}/>
       </Modal>
     </div>
   );
 }
 
-export default WaitingTable
+export default ChallengeTable

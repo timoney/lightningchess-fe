@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Challenge from './Challenge';
+import CreateChallenge from './CreateChallenge';
 import Modal from '@mui/material/Modal';
 
 const style = {
@@ -28,7 +28,7 @@ const ChallengeButton = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Challenge/>
+        <CreateChallenge setOpen={setOpen}/>
       </Modal>
     </div>
   )
