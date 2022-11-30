@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik';
+import Waiting from './Waiting';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
@@ -13,10 +14,14 @@ import Typography from '@mui/material/Typography';
 
 const Challenge = () => {
   const [gameInfo, setGameInfo] = useState(null);
-  const [limit, setLimit] = useState(5)
+  const [timeLimit, setTimeLimit] = useState(5)
   const [increment, setIncrement] = useState(0)
 
   const submitChallenge = async (values) => {
+    values.time_limit = values.time_limit * 60
+    values.opponent_time_limit = values.opponent_time_limit * 60
+    values.sats = Number(values.sats)
+
     let constValuesJson = JSON.stringify(values, null, " ");
     console.log(`values: ${constValuesJson}`)
   
@@ -36,13 +41,13 @@ const Challenge = () => {
   }
 
   const formik = useFormik({
-    initialValues: { opponent: '', limit: 5, increment: '', color: 'white', sats: '100'},
+    initialValues: { opp_username: '', time_limit: 5, opponent_time_limit: 0, increment: 0, color: 'white', sats: '100'},
     onSubmit: submitChallenge,
   });
 
   const sliderChangeLimit = (e, v) => {
-    formik.setFieldValue('limit', v);
-    setLimit(v)
+    formik.setFieldValue('time_limit', v);
+    setTimeLimit(v)
   }
 
   const sliderChangeIncrement = (e, v) => {
@@ -62,9 +67,9 @@ const Challenge = () => {
           Challenge
         </Typography>
           <form onSubmit={formik.handleSubmit}>
-              <TextField id="opponent" value={formik.values.opponent} onChange={formik.handleChange} label="Opponent" variant="outlined" margin="normal" /><br/>
-              <Typography id="limit-slider" gutterBottom>Minutes per side: {limit}</Typography>
-              <Slider id="limit" value={formik.values.limit} aria-labelledby="limit-slider" onChange={ sliderChangeLimit } step={1} marks min={1} max={10} valueLabelDisplay="auto" /><br/>
+              <TextField id="opp_username" value={formik.values.opp_username} onChange={formik.handleChange} label="Opponent" variant="outlined" margin="normal" /><br/>
+              <Typography id="limit-slider" gutterBottom>Minutes per side: {timeLimit}</Typography>
+              <Slider id="time_limit" value={formik.values.time_limit} aria-labelledby="limit-slider" onChange={ sliderChangeLimit } step={1} marks min={1} max={10} valueLabelDisplay="auto" /><br/>
               <Typography id="increment-slider" gutterBottom>Increment in seconds: {increment}</Typography>
               <Slider id="increment" value={formik.values.increment} aria-labelledby="increment-slider" onChange={ sliderChangeIncrement } step={1} marks min={0} max={10} valueLabelDisplay="auto" /><br/>
               <FormControl>
@@ -86,11 +91,8 @@ const Challenge = () => {
       </Paper>
     </Container>)
   } else {
-    console.log(`gameInfo: ${gameInfo}`)
     console.log(`gameInfo: ${JSON.stringify(gameInfo, null, ' ')}`)
-    const url = gameInfo.challenge.url
-    console.log(`url: ${url}`)
-    return <a href={url} target="_blank" rel="noopener noreferrer">Play here!</a>
+    return <Waiting/>
   } 
 
 }
