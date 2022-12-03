@@ -22,10 +22,12 @@ const CreateChallengeWaiting = ({gameInfo, setOpen}) => {
       })
       .then(challenges => {
         let gameAccepted = challenges.filter(x => x.status.toUpperCase() === 'ACCEPTED' && x.id === gameInfo.id)
+        console.log(`gameAccepted: ${JSON.stringify(gameAccepted, null, ' ')}`)
         if (gameAccepted.length == 1) {
+          let accepted = gameAccepted[0]
           setIsAccepted(true)
-          console.log(`gameAccepted: ${JSON.stringify(gameAccepted, null, ' ')}`)
-          setAcceptedGameInfo(gameAccepted)
+          setAcceptedGameInfo(accepted)
+          window.open(`https://lichess.org/${accepted.lichess_challenge_id}`, '_blank')
         }
       })
   }
@@ -39,19 +41,23 @@ const CreateChallengeWaiting = ({gameInfo, setOpen}) => {
           <Typography component="h1" variant="h4" align="center">
               Challenge has been accepted!
           </Typography>
-          <Button onClick={() => window.open(`https://lichess.org/${acceptedGameInfo.lichess_challenge_id}`, '_blank')} variant="contained" size="large">Play Here!</Button>
+          <Box textAlign='center'>
+            <Button onClick={() => window.open(`https://lichess.org/${acceptedGameInfo.lichess_challenge_id}`, '_blank')} variant="contained" size="large" color="success">Play Here!</Button>
+          </Box>
         </div>
       )
     } else {
       return (
         <div>
-          <Box sx={{ display: 'flex' }} justifyContent="center">
+          <Box sx={{ display: 'flex', m: 1}} justifyContent="center">
             <CircularProgress />
           </Box>
-          <Typography component="h1" variant="h4" align="center">
+          <Typography component="h1" variant="h5" align="center" sx={{ m: 4 }}>
             Waiting for {gameInfo.opp_username} to accept the challenge.
           </Typography>
-          <Button onClick={() => setOpen(false)} variant="contained" size="medium">Back to dashboard</Button>
+          <Box textAlign='center'>
+            <Button onClick={() => setOpen(false)} variant="contained" size="small">Back to dashboard</Button>
+          </Box>
         </div>
       )
     }

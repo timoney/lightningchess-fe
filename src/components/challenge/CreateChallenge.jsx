@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
-import { useFormik } from 'formik';
-import CreateChallengeWaiting from './CreateChallengeWaiting';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
-import Select from '@mui/material/Select';
-import Slider from '@mui/material/Slider';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import { useFormik } from 'formik'
+import CreateChallengeWaiting from './CreateChallengeWaiting'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Paper from '@mui/material/Paper'
+import Select from '@mui/material/Select'
+import Slider from '@mui/material/Slider'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 const CreateChallenge = ({setOpen}) => {
-  const [gameInfo, setGameInfo] = useState(null);
+  const [gameInfo, setGameInfo] = useState(null)
   const [timeLimit, setTimeLimit] = useState(5)
   const [increment, setIncrement] = useState(0)
 
@@ -43,7 +43,7 @@ const CreateChallenge = ({setOpen}) => {
   const formik = useFormik({
     initialValues: { opp_username: '', time_limit: 5, opponent_time_limit: 0, increment: 0, color: 'white', sats: '100'},
     onSubmit: submitChallenge,
-  });
+  })
 
   const sliderChangeLimit = (e, v) => {
     formik.setFieldValue('time_limit', v);
@@ -73,7 +73,7 @@ const CreateChallenge = ({setOpen}) => {
               <Typography id="increment-slider" gutterBottom>Increment in seconds: {increment}</Typography>
               <Slider id="increment" value={formik.values.increment} aria-labelledby="increment-slider" onChange={ sliderChangeIncrement } step={1} marks min={0} max={10} valueLabelDisplay="auto" /><br/>
               <FormControl>
-              <InputLabel id="color-label">Color</InputLabel>
+                <InputLabel id="color-label">Color</InputLabel>
                 <Select
                   labelId="color-label"
                   id="color"

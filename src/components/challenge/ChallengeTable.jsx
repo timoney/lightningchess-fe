@@ -1,15 +1,18 @@
-import React, { useState} from 'react';
+import React, { useContext, useState} from 'react'
+import { AuthContext } from '../../contexts/Auth'
+import { getDashboardTime, getStatus, getOpponent } from '../../utils/utils'
 import ChallengeDetails from './ChallengeDetails'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Modal from '@mui/material/Modal';
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
+import Modal from '@mui/material/Modal'
 
 const ChallengeTable = ({rows}) => {
+  const userProfile = useContext(AuthContext)
   const [open, setOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState({});
   const handleClose = () => {
@@ -20,14 +23,12 @@ const ChallengeTable = ({rows}) => {
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 200}} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Opponent</TableCell>
-              <TableCell align="right">Your Color</TableCell>
-              <TableCell align="right">Time Control</TableCell>
-              <TableCell align="right">Increment</TableCell>
-              <TableCell align="right">Sats</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell align="right">Opponent</TableCell>
+              <TableCell align="right">Created at</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -42,13 +43,9 @@ const ChallengeTable = ({rows}) => {
                 hover
                 selected= {selectedRow.id === row.id}
               >
-                <TableCell component="th" scope="row">
-                  {row.opp_username}
-                </TableCell>
-                <TableCell align="right">{row.color === 'white' ? 'black' : 'white'}</TableCell>
-                <TableCell align="right">{row.time_limit}</TableCell>
-                <TableCell align="right">{row.increment}</TableCell>
-                <TableCell align="right">{row.sats}</TableCell>
+                <TableCell component="th" scope="row">{getStatus(userProfile,row)}</TableCell>
+                <TableCell align="right">{getOpponent(userProfile, row)}</TableCell>
+                <TableCell align="right">{getDashboardTime(row.created_on)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -60,7 +57,7 @@ const ChallengeTable = ({rows}) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <ChallengeDetails challenge={selectedRow}/>
+        <ChallengeDetails challenge={selectedRow} setOpen={setOpen}/>
       </Modal>
     </div>
   );
