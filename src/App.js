@@ -1,10 +1,20 @@
 import './App.css';
-import Header from './components/Header'
+
+import React, { useContext } from 'react'
+
+import Dashboard from './components/Dashboard'
 import Main from './components/Main'
-import { AuthProvider } from './contexts/Auth'
-import CssBaseline from '@mui/material/CssBaseline';
+import Welcome from './components/Welcome'
+import Layout from './components/Layout'
+import Wallet from './components/wallet/Wallet'
+import { AuthProvider, AuthContext } from './contexts/Auth'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { BrowserRouter } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 function App() {
   const theme = createTheme({
@@ -29,15 +39,38 @@ function App() {
     <div className="App">
       <AuthProvider>
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <CssBaseline />
-            <Header/>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>} 
+              />
+              <Route path="/wallet" element={
+                <RequireAuth>
+                  <Wallet />
+                </RequireAuth>}
+              />
+              <Route path="/welcome" element={<Welcome/>}/>
+            </Route>
+          </Routes>
+        </BrowserRouter>
             <Main/>
-            </BrowserRouter>
         </ThemeProvider>
       </AuthProvider>
     </div>
   );
+}
+
+function RequireAuth({ children }) {
+  const userProfile = useContext(AuthContext)
+
+  if (!userProfile.username) {
+    return <Navigate to="/welcome"/>;
+  }
+
+  return children;
 }
 
 export default App;

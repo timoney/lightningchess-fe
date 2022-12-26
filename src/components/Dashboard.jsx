@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ChallengeTable from './challenge/ChallengeTable'
 import ChallengeButton from './challenge/ChallengeButton'
 import { useInterval } from 'usehooks-ts'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [challenges, setChallenges] = useState([])
+  let navigate = useNavigate()
 
   const fetchChallenges = () => {
     fetch('/api/challenges', { mode: 'no-cors' })
@@ -36,6 +39,9 @@ const Dashboard = () => {
       <Box textAlign='center'>
         <Box sx={{mt: 5}}>
           <ChallengeButton variant="contained" size="large">Challenge</ChallengeButton>
+        </Box>
+        <Box sx={{mt: 5}}>
+          <Button onClick={ () => navigate('/wallet') }variant="contained" size="large">Fund Account</Button>
         </Box>
         <Box sx={{m: 4}}>
           <h2>Challenges</h2>

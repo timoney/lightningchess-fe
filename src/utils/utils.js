@@ -28,17 +28,15 @@ export const getLocalTime = (dateStrUtc) => {
   return newDate.toLocaleString()
 }
 
-export const getStatus = (userProfile, gameInfo) => {
-  if (userProfile.username === gameInfo.username) {
-    if (gameInfo.status === "WAITING") {
-      return "Waiting for opponent to accept"
-    } else if (gameInfo.status === "ACCEPTED") {
-      return "Waiting for you to play"
-    }
-  } else {
-    if (gameInfo.status === "WAITING") {
-      return "Waiting for you to accept"
-    }
+// WAITING FOR ACCEPTANCE
+// ACCEPTED
+// COMPLETED
+export const getUseFriendlyStatus = (userProfile, gameInfo) => {
+  const userCreatedChallenge = userProfile.username === gameInfo.username
+  if (gameInfo.status === "WAITING FOR ACCEPTANCE") {
+    return userCreatedChallenge ? "Waiting for opponent to accept" : "Waiting for to accept"
+  } else if (gameInfo.status === "ACCEPTED") {
+    return "Ready to play"
   }
 }
 

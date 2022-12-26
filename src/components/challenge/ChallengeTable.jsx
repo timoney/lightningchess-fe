@@ -1,7 +1,7 @@
 import React, { useContext, useState} from 'react'
 import { AuthContext } from '../../contexts/Auth'
-import { getDashboardTime, getStatus, getOpponent } from '../../utils/utils'
-import ChallengeDetails from './ChallengeDetails'
+import { getDashboardTime, getUseFriendlyStatus, getOpponent } from '../../utils/utils'
+import ChallengeDetailsContainer from './ChallengeDetailsContainer'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -43,7 +43,7 @@ const ChallengeTable = ({rows}) => {
                 hover
                 selected= {selectedRow.id === row.id}
               >
-                <TableCell component="th" scope="row">{getStatus(userProfile,row)}</TableCell>
+                <TableCell component="th" scope="row">{getUseFriendlyStatus(userProfile,row)}</TableCell>
                 <TableCell align="right">{getOpponent(userProfile, row)}</TableCell>
                 <TableCell align="right">{getDashboardTime(row.created_on)}</TableCell>
               </TableRow>
@@ -57,7 +57,7 @@ const ChallengeTable = ({rows}) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <ChallengeDetails challenge={selectedRow} setOpen={setOpen}/>
+        <ChallengeDetailsContainer selectedChallenge={selectedRow} setOpen={setOpen}/>
       </Modal>
     </div>
   );

@@ -4,10 +4,6 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-const titleStyle = {
-  flexGrow: 1
-};
-
 const Header = () => {
   
   const userProfile = useContext(AuthContext)

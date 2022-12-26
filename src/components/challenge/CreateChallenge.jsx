@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import CreateChallengeWaiting from './CreateChallengeWaiting'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import FormControl from '@mui/material/FormControl'
@@ -13,7 +12,6 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
 const CreateChallenge = ({setOpen}) => {
-  const [gameInfo, setGameInfo] = useState(null)
   const [timeLimit, setTimeLimit] = useState(5)
   const [increment, setIncrement] = useState(0)
 
@@ -22,7 +20,7 @@ const CreateChallenge = ({setOpen}) => {
     values.opponent_time_limit = values.opponent_time_limit * 60
     values.sats = Number(values.sats)
 
-    let constValuesJson = JSON.stringify(values, null, " ");
+    let constValuesJson = JSON.stringify(values, null, " ")
     console.log(`values: ${constValuesJson}`)
   
     const response = await fetch('/api/challenge', { 
@@ -37,7 +35,7 @@ const CreateChallenge = ({setOpen}) => {
     const data = await response.json()
     console.log(`data: ${data}`)
     console.log(`data: ${JSON.stringify(data, null, ' ')}`)
-    setGameInfo(data)
+    setOpen(false)
   }
 
   const formik = useFormik({
@@ -59,8 +57,7 @@ const CreateChallenge = ({setOpen}) => {
     formik.setFieldValue('color', e.target.value);
   }
 
-  if (gameInfo == null) {
-    return (
+  return (
     <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
       <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
         <Typography component="h1" variant="h4" align="center">
@@ -89,11 +86,8 @@ const CreateChallenge = ({setOpen}) => {
               <Button variant="contained" type="submit">Submit</Button>
           </form>
       </Paper>
-    </Container>)
-  } else {
-    return <CreateChallengeWaiting gameInfo={gameInfo} setOpen={setOpen}/>
-  } 
-
+    </Container>
+  )
 }
 
 export default CreateChallenge
