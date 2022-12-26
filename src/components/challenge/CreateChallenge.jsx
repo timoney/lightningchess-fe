@@ -63,28 +63,28 @@ const CreateChallenge = ({setOpen}) => {
         <Typography component="h1" variant="h4" align="center">
           Challenge
         </Typography>
-          <form onSubmit={formik.handleSubmit}>
-              <TextField id="opp_username" value={formik.values.opp_username} onChange={formik.handleChange} label="Opponent" variant="outlined" margin="normal" /><br/>
-              <Typography id="limit-slider" gutterBottom>Minutes per side: {timeLimit}</Typography>
-              <Slider id="time_limit" value={formik.values.time_limit} aria-labelledby="limit-slider" onChange={ sliderChangeLimit } step={1} marks min={1} max={10} valueLabelDisplay="auto" /><br/>
-              <Typography id="increment-slider" gutterBottom>Increment in seconds: {increment}</Typography>
-              <Slider id="increment" value={formik.values.increment} aria-labelledby="increment-slider" onChange={ sliderChangeIncrement } step={1} marks min={0} max={10} valueLabelDisplay="auto" /><br/>
-              <FormControl>
-                <InputLabel id="color-label">Color</InputLabel>
-                <Select
-                  labelId="color-label"
-                  id="color"
-                  value={formik.values.color}
-                  label="Color"
-                  onChange={onChangeColor}
-                >
-                  <MenuItem value={"white"}>White</MenuItem>
-                  <MenuItem value={"black"}>Black</MenuItem>
-                </Select>
-              </FormControl><br/>
-              <TextField id="sats" value={formik.values.sats} onChange={formik.handleChange} label="Sats" variant="outlined" margin="normal"/><br/>
-              <Button variant="contained" type="submit">Submit</Button>
-          </form>
+        <form onSubmit={formik.handleSubmit}>
+            <TextField id="opp_username" value={formik.values.opp_username} onChange={formik.handleChange} label="Opponent" variant="outlined" margin="normal" /><br/>
+            <Typography id="limit-slider" gutterBottom>Minutes per side: {timeLimit}</Typography>
+            <Slider id="time_limit" value={formik.values.time_limit} aria-labelledby="limit-slider" onChange={ sliderChangeLimit } step={1} marks min={1} max={10} valueLabelDisplay="auto" /><br/>
+            <Typography id="increment-slider" gutterBottom>Increment in seconds: {increment}</Typography>
+            <Slider id="increment" value={formik.values.increment} aria-labelledby="increment-slider" onChange={ sliderChangeIncrement } step={1} marks min={0} max={10} valueLabelDisplay="auto" /><br/>
+            <FormControl>
+              <InputLabel id="color-label">Color</InputLabel>
+              <Select
+                labelId="color-label"
+                id="color"
+                value={formik.values.color}
+                label="Color"
+                onChange={onChangeColor}
+              >
+                <MenuItem value={"white"}>White</MenuItem>
+                <MenuItem value={"black"}>Black</MenuItem>
+              </Select>
+            </FormControl><br/>
+            <TextField id="sats" value={formik.values.sats} onChange={formik.handleChange} label="Sats" variant="outlined" margin="normal"/><br/>
+            <Button variant="contained" type="submit">Submit</Button>
+        </form>
       </Paper>
     </Container>
   )
