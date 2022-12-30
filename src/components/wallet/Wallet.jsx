@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useInterval } from 'usehooks-ts'
 
 import GenerateInvoice from './GenerateInvoice'
+import ViewTx from './ViewTx'
+import Withdrawal from './Withdrawal'
+import Balance from '../Balance'
 
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -19,13 +22,10 @@ const Wallet = () => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [transactions, setTransactions] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
-  const [modalComponent, setModalComponent] = useState(null)
-
-  const openCreateInvoice = () => {
-    setModalComponent(<GenerateInvoice setIsOpen={setIsOpen}/>)
-    setIsOpen(true)
-  }
+  const [isGenerateOpen, setIsGenerateOpen] = useState(false)
+  const [isViewTxOpen, setIsViewTxOpen] = useState(false)
+  const [isWithdrawalOpen, setIsWithdrawalOpen] = useState(false)
+  const [selectedRow, setSelectedRow] = useState({})
 
   const fetchTransactions = () => {
     fetch('/api/transactions', { mode: 'no-cors' })
@@ -34,7 +34,7 @@ const Wallet = () => {
         else return {}
       })
       .then(transactions => {
-        let sorted = transactions.sort((a, b) => b.id - a.id )
+        let sorted = transactions.sort((a, b) => b.transaction_id - a.transaction_id )
         setIsLoading(false)
         setTransactions(sorted)
       })
@@ -51,8 +51,9 @@ const Wallet = () => {
   } else {
     return (
       <div>
-        <Button onClick={openCreateInvoice} variant="contained" size="large">Fund</Button>
-        <Button onClick={console.log("withrawal")} variant="contained" size="large">Withdrawal</Button>
+        <Balance />
+        <Button onClick={() => setIsGenerateOpen(true)} variant="contained" size="large">Fund</Button>
+        <Button onClick={() => setIsWithdrawalOpen(true)} variant="contained" size="large">Withdrawal</Button>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 200}} aria-label="simple table">
             <TableHead>
@@ -69,25 +70,47 @@ const Wallet = () => {
                   key={row.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   onClick={() => {
-                    console.log("hi")
+                    setSelectedRow(row)
+                    setIsViewTxOpen(true)
                   }}
                   hover
+                  selected= {selectedRow.id === row.id}
                 >
-                  <TableCell>row.ttype</TableCell>
-                  <TableCell>row.detail</TableCell>
-                  <TableCell>row.amount</TableCell>
-                  <TableCell>row.state</TableCell>
+                  <TableCell>{row.ttype}</TableCell>
+                  <TableCell>{row.detail}</TableCell>
+                  <TableCell>{row.amount}</TableCell>
+                  <TableCell>{row.state}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
         <Modal
-          open={isOpen}
+          open={isGenerateOpen}
+          onClose={() => setIsGenerateOpen(false)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          {modalComponent}
+          <GenerateInvoice setIsOpen={setIsGenerateOpen}/>
+        </Modal>
+        <Modal
+          open={isViewTxOpen}
+          onClose={() => {
+            setSelectedRow({})
+            setIsViewTxOpen(false)
+          }}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <ViewTx selectedTx={selectedRow} setIsOpen={setIsViewTxOpen}/>
+        </Modal>
+        <Modal
+          open={isWithdrawalOpen}
+          onClose={() => setIsWithdrawalOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Withdrawal setIsOpen={setIsWithdrawalOpen}/>
         </Modal>
       </div>)
   }

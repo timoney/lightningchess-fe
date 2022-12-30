@@ -3,6 +3,7 @@ import './App.css';
 import React, { useContext } from 'react'
 
 import Dashboard from './components/Dashboard'
+import Main from './components/Main'
 import Welcome from './components/Welcome'
 import Layout from './components/Layout'
 import Wallet from './components/wallet/Wallet'
@@ -38,23 +39,24 @@ function App() {
     <div className="App">
       <AuthProvider>
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/" element={
-                  <RequireAuth>
-                    <Dashboard />
-                  </RequireAuth>} 
-                />
-                <Route path="/wallet" element={
-                  <RequireAuth>
-                    <Wallet />
-                  </RequireAuth>}
-                />
-                <Route path="/welcome" element={<Welcome/>}/>
-              </Route>
-            </Routes>
-          </BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>} 
+              />
+              <Route path="/wallet" element={
+                <RequireAuth>
+                  <Wallet />
+                </RequireAuth>}
+              />
+              <Route path="/welcome" element={<Welcome/>}/>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+            <Main/>
         </ThemeProvider>
       </AuthProvider>
     </div>

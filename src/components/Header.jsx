@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../contexts/Auth';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import React, { useContext } from 'react'
+import { AuthContext } from '../contexts/Auth'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 
 const Header = () => {
-  
   const userProfile = useContext(AuthContext)
-  const username = userProfile.username ? <Typography>{userProfile.username}</Typography> : null
+  let username = null
+  if (userProfile.username) {
+    username = <Typography>{userProfile.username}</Typography>
+  }
+
   return (
     <AppBar
       position="absolute"
@@ -20,7 +23,7 @@ const Header = () => {
     >
       <Toolbar>
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-          Lightning Chess
+        Lightning Chess
         </Typography>
         {username}
       </Toolbar>

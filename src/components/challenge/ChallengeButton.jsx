@@ -9,7 +9,7 @@ const ChallengeButton = () => {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained" size="large">Challenge</Button>
+      <Button onClick={handleOpen} variant="contained" size="large">Create challenge</Button>
       <Modal
         open={open}
         onClose={handleClose}

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useInterval } from 'usehooks-ts'
 import { AuthContext } from '../../contexts/Auth';
 import ChallengeDetails from './ChallengeDetails'
-import ChallengePayment from './ChallengePayment'
+import Payment from '../wallet/Payment'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -32,17 +32,31 @@ const ChallengeDetailsContainer = ({selectedChallenge}) => {
   }
 
   useInterval(fetchInvoice, 2000)
+  
+  const submitAcceptChallenge = async () => {
+    let id = challengeDetails.id
+    let constValuesJson = JSON.stringify({id}, null, " ")
+    console.log(`values: ${constValuesJson}`)
+  
+    const response = await fetch('/api/accept-challenge', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: constValuesJson,
+      mode: 'no-cors', 
+    })
 
-  let maybeChallengePayment = null
-  let message = null
-  if (challengeDetails.status === "NEED PAYMENT" && userProfile.username === challengeDetails.username) { 
-    maybeChallengePayment = <ChallengePayment text={challengeDetails.payment_request} />
-    message = <Typography component="body1" align="center">If challenge is not accepted in an hour, funds will be returned.</Typography>
+    console.log(`response: ${response}`)
+    const data = await response.json()
+    console.log(`data: ${data}`)
+    console.log(`data: ${JSON.stringify(data, null, ' ')}`)
+    setChallengeDetails(data)
   }
   
-  if (challengeDetails.status === "NEED OPP PAYMENT" && userProfile.username === challengeDetails.opp_username) { 
-    maybeChallengePayment = <ChallengePayment text={challengeDetails.opp_payment_request} />
-    message = <Typography component="body1" align="center">Make payment to accepted the challenge</Typography>
+  let acceptChallengeButton = null
+  if (challengeDetails.status === "WAITING FOR ACCEPTANCE" && userProfile.username === challengeDetails.opp_username) { 
+    acceptChallengeButton = <Button variant="contained" onClick={submitAcceptChallenge}type="submit">Accept challenge</Button>
   }
 
   let playHereButton = null
@@ -57,9 +71,8 @@ const ChallengeDetailsContainer = ({selectedChallenge}) => {
     <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
       <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
         {playHereButton}
-        {maybeChallengePayment}
+        {acceptChallengeButton}
         <ChallengeDetails challenge={challengeDetails}/>
-        {message}
       </Paper>
     </Container>
   )

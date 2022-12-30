@@ -34,9 +34,11 @@ export const getLocalTime = (dateStrUtc) => {
 export const getUseFriendlyStatus = (userProfile, gameInfo) => {
   const userCreatedChallenge = userProfile.username === gameInfo.username
   if (gameInfo.status === "WAITING FOR ACCEPTANCE") {
-    return userCreatedChallenge ? "Waiting for opponent to accept" : "Waiting for to accept"
+    return userCreatedChallenge ? "Waiting for opponent to accept" : "Waiting for you to accept"
   } else if (gameInfo.status === "ACCEPTED") {
     return "Ready to play"
+  } else if (gameInfo.status === "COMPLETED") {
+    return "Completed"
   }
 }
 
